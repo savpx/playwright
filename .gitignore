@@ -1,0 +1,45 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+wheels/
+*.egg-info/
+.Python
+
+# --- Окружения ---
+/.venv/
+/.venv*/
+venv/
+.env
+.env.*
+!.env.example
+
+# --- Тесты и кэши инструментов ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# --- Playwright ---
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+*.webm
+*.zip
+
+# --- IDE / ОС ---
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# uv.lock НЕ игнорируем — он обязателен
+
