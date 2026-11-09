@@ -1,0 +1,23 @@
+# Савельев Тимур Евгеньевич
+# 09.11.2026 / Время: 16:37
+# Код запускает изоляцию страниц в браузере. страницы изолированы между тестами благодаря контексту браузера.
+# Код из раздела Writing Tests, запуск локальный.
+import pytest
+from playwright.sync_api import Page, expect
+
+@pytest.fixture(scope="function", autouse=True)
+def before_each_after_each(page: Page):
+    
+    print("before the test runs")
+
+    
+    page.goto("https://playwright.dev/")
+    yield
+    
+    print("after the test runs")
+
+def test_main_navigation(page: Page):
+    
+    expect(page).to_have_url("https://playwright.dev/")
+# результат терминала в папке img/test_2
+# Код выполнен без ошибок.
