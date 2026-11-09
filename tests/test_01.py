@@ -19,5 +19,5 @@ def test_get_started_link(page: Page):
 
     
     expect(page.get_by_role("heading", name="Installation")).to_be_visible()
-# Результат запуска: 2 passed, 1 warning in 9.71s
+# Результат запуска: img/test_01
 # Код выполнен без ошибок.

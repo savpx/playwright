@@ -19,5 +19,5 @@ def before_each_after_each(page: Page):
 def test_main_navigation(page: Page):
     
     expect(page).to_have_url("https://playwright.dev/")
-# результат терминала в папке img/test_2
+# результат в папке img/test_2
 # Код выполнен без ошибок.
