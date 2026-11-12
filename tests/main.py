@@ -13,4 +13,6 @@ with sync_playwright() as p:
 
 # тот же самый код из test_04.py.
 # создался файл main.exe при запуске которого активируется тест из main.py
-# код выполнен без ошибок. main.exe находится в папке tests.
+# код выполнен без ошибок. размер файла main.exe поэтому я убрал его из проекта.
+# для создания использовал bash терминал: 1) uv add pyinstaller 2) PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium 3) pyinstaller -F main.py
+
