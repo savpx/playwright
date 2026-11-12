@@ -35,6 +35,10 @@ playwright/.cache/
 *.webm
 *.zip
 
+# --- Сборки (PyInstaller и пр.) ---
+*.exe
+*.spec
+
 # --- IDE / ОС ---
 .idea/
 .DS_Store
