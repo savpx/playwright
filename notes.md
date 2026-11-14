@@ -112,3 +112,46 @@ expect.soft(page.get_by_test_id("status")).to_have_text("Success") - soft не �
     `expect(page.get_by_text("Name")).to_be_visible(timeout=10_000)`
 
 # Раздел: Аунтификация
+Playwright выполняет тесты в изолированных средах, называемых контекстами браузера . Такая модель изоляции повышает воспроизводимость и предотвращает каскадные сбои тестов. Тесты могут загружать существующее аутентифицированное состояние. Это устраняет необходимость аутентификации в каждом тесте и ускоряет выполнение тестов.
+
+
+Мы рекомендуем создать playwright/.authкаталог и добавить его в ваш файл .gitignore. Ваша процедура аутентификации будет генерировать состояние аутентифицированного браузера и сохранять его в файл в этом playwright/.authкаталоге.
+`mkdir -p playwright/.auth`
+
+`echo $'\nplaywright/.auth' >> .gitignore`
+### Вход в систему перед каждым тестом
+В следующем примере выполняется вход в GitHub. После выполнения этих шагов будет выполнена аутентификация в контексте браузера.
+
+page = context.new_page()
+page.goto('https://github.com/login')
+
+page.get_by_label("Username or email address").fill("username")
+page.get_by_label("Password").fill("password")
+page.get_by_role("button", name="Sign in").click()
+
+Повторная авторизация для каждого теста может замедлить его выполнение. Чтобы этого избежать, используйте вместо этого существующее состояние аутентификации.
+
+### Повторное использование подписанного в штате
+
+storage = context.storage_state(path="state.json")
+
+context = browser.new_context(storage_state="state.json")
+
+### Расширенные сценарии
+Повторное использование аутентифицированного состояния включает в себя файлы cookie , локальное хранилище , IndexedDB и аутентификацию на основе пароля ( WebAuthn ). 
+
+import os
+
+session_storage = page.evaluate("() => JSON.stringify(sessionStorage)")
+os.environ["SESSION_STORAGE"] = session_storage
+
+session_storage = os.environ["SESSION_STORAGE"]
+escaped_session_storage = session_storage.replace("\\", "\\\\").replace("'", "\\'")
+context.add_init_script("""(storage => {
+  if (window.location.hostname === 'example.com') {
+    const entries = JSON.parse(storage)
+    for (const [key, value] of Object.entries(entries)) {
+      window.sessionStorage.setItem(key, value)
+    }
+  }
+})('""" + escaped_session_storage + "')")
