@@ -46,5 +46,9 @@ Thumbs.db
 desktop.ini
 *.log
 
-# uv.lock НЕ игнорируем — он обязателен
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
 
