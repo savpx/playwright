@@ -155,3 +155,40 @@ context.add_init_script("""(storage => {
     }
   }
 })('""" + escaped_session_storage + "')")
+
+
+Раздел Браузеры
+Для работы каждой версии Playwright требуются определённые версии исполняемых файлов браузера. Для установки этих браузеров вам понадобится использовать интерфейс командной строки Playwright.
+
+playwright install
+playwright install webkit - установка опред браузера
+
+### Установите системные зависимости
+Системные зависимости могут устанавливаться автоматически. Это полезно для сред непрерывной интеграции (CI).
+playwright install-deps
+playwright install-deps chromium - для конкретного браузера
+
+Playwright может запускать тесты в браузерах Chromium, WebKit и Firefox, а также в фирменных браузерах, таких как Google Chrome и Microsoft Edge.
+pytest test_login.py --browser webkit - запуск в конкретном браузере.
+pytest test_login.py --browser webkit --browser firefox - в нескольких.
+
+Иногда компании используют внутренний прокси-сервер, который блокирует прямой доступ к общедоступным ресурсам. В этом случае Playwright можно настроить на загрузку браузеров через прокси-сервер.
+pip install playwright
+HTTPS_PROXY=https://192.0.2.1 playwright install (Bash)
+
+Иногда компании используют внутренний репозиторий артефактов для размещения исполняемых файлов браузера. В этом случае Playwright можно настроить на загрузку из пользовательского места с помощью PLAYWRIGHT_DOWNLOAD_HOSTпеременной окружения.
+pip install playwright
+PLAYWRIGHT_DOWNLOAD_HOST=http://192.0.2.1 playwright install 
+
+Удаление устаревших браузеров
+Чтобы отказаться от удаления неиспользуемых браузеров, вы можете установить PLAYWRIGHT_SKIP_BROWSER_GC=1переменную среды или передать этот --no-removeпараметр команде установки:
+playwright install --no-remove
+
+Выводит список браузеров со всех установленных на компьютере приложений Playwright:
+playwright install --list
+
+Это удалит браузеры (Chromium, Firefox, WebKit) из текущей установки Playwright:
+playwright uninstall
+
+Чтобы удалить браузеры и из других установок Playwright, передайте --allфлаг:
+playwright uninstall --all
